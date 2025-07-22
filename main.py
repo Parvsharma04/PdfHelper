@@ -362,6 +362,10 @@ async def query_mongodb_and_rag(collection, question: str, llm_client_type: str 
         raise HTTPException(status_code=500, detail=f"Failed to answer question due to an internal error: {e}")
 
 # --- FastAPI Endpoint ---
+@app.get('/')
+def run():
+    return {"works": "yes"}
+
 @app.post("/hackrx/run", response_model=HackRXResponse)
 async def hackrx_run_endpoint(request: HackRXRequest):
     """
