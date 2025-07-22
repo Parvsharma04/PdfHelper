@@ -420,3 +420,7 @@ async def hackrx_run_endpoint(request: HackRXRequest):
     except Exception as e:
         logger.error(f"An unhandled error occurred during PDF processing: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {e}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
