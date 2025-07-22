@@ -55,7 +55,7 @@ MONGO_VECTOR_INDEX_NAME = "default"
 EMBEDDING_DIMENSION = 3072
 
 GEMINI_LLM_MODEL = "gemini-1.5-flash"
-GEMINI_EMBEDDING_MODEL = "gemini-embedding-001"
+GEMINI_EMBEDDING_MODEL = "models/gemini-embedding-exp-03-07"
 GROQ_LLM_MODEL = "llama3-8b-8192"
 
 CHUNK_SIZE = 1000
@@ -195,7 +195,7 @@ async def generate_embeddings(texts: List[str]) -> List[List[float]]:
     logger.info(f"Attempting to generate embeddings for {len(filtered_texts)} total chunks using LangChain.")
 
     try:
-        embeddings = await embeddings_model.aembed_documents(
+        embeddings = embeddings_model.embed_documents(  # Removed await
             filtered_texts,
             task_type="RETRIEVAL_DOCUMENT"
         )
@@ -261,7 +261,7 @@ async def query_mongodb_and_rag(collection, question: str, llm_client_type: str 
     try:
         # 1. Generate embedding for the user's question using LangChain
         try:
-            query_embedding = await embeddings_model.aembed_query(
+            query_embedding = embeddings_model.embed_query( # Removed await
                 question,
                 task_type="RETRIEVAL_QUERY"
             )
